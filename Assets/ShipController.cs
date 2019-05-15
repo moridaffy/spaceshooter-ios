@@ -17,6 +17,7 @@ public class ShipController : MonoBehaviour
 
     public GameObject laserShot;
     public Transform laserGun;
+    private GameControllerScript gameController;
 
     private Rigidbody ship;
 
@@ -24,10 +25,16 @@ public class ShipController : MonoBehaviour
     void Start()
     {
         ship = GetComponent<Rigidbody>();
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameControllerScript>();
     }
 
     private void Update()
     {
+        if (!gameController.isStarted())
+        {
+            return;
+        }
+
         bool canShoot = Time.time > nextShot;
         if (Input.GetButton("Fire1") && canShoot)
         {
